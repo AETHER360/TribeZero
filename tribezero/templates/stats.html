@@ -1,0 +1,72 @@
+{% extends "dashboard_layout.html" %}
+
+{% block stats %}
+    <main class="main-content">
+        <div class="container-chart">
+            <canvas id="chart1"></canvas>
+        </div>
+    </main>
+    <script>
+        let chart1 = document.getElementById('chart1').getContext('2d');
+
+        //Global Options
+        Chart.defaults.global.defaultFontFamily = 'Lato';
+        Chart.defaults.global.defaultFontSize = 18;
+        Chart.defaults.global.defaultFontColor = '#777';
+
+        let testChart = new Chart(chart1, {
+            type:'line',
+            data:{
+                labels:[
+                    '10/10/2019',
+                    '11/10/2019',
+                    '12/10/2019',
+                    '13/10/2019',
+                    '14/10/2019'
+                ],
+                datasets:[{
+                    label:'Population',
+                    data:[
+                        19,
+                        5,
+                        13,
+                        2,
+                        12
+                    ],
+                    backgroundColor:[
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(255, 159, 64, 0.6)'
+                    ],
+                    borderWidth:1,
+                    borderColor:'#777',
+                    hoverBorderWidth:3,
+                    hoverBorderColor:'#000'
+                }]
+            },
+            options:{
+                title:{
+                    display:true,
+                    text:'Items Sold in Last 5 Days',
+                    fontSize: 25
+                },
+                legend:{
+                    display:false
+                },
+                layout:{
+                    padding:{
+                        left:0,
+                        right:0,
+                        bottom:0,
+                        top:0
+                    }
+                },
+                tooltips:{
+                    enabled:true
+                }
+            }
+        });
+    </script>
+{% endblock stats %}

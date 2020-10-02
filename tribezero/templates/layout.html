@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- Required meta tags for Bootstrap-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    {% if title %}
+        <title>Tribe Zero - {{ title }}</title>
+    {% else %}
+        <title>Tribe Zero</title>
+    {% endif %}
+</head>
+
+<body>
+    <div id="container">
+        <header class="site-header fixed-top" id="header">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-mossy">
+
+                <!-- Logo -->
+                <a class="navbar-brand" href="{{ url_for('main.home') }}"><img height="50px" src="{{ url_for('static', filename='tribezero_logo.png') }}">Tribe Zero</a>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Responsive and collapsing navbar -->
+                <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                    <ul class="navbar-nav ml-5">
+                        <li class="nav-item">
+                            <a id="home" class="nav-link" href="{{ url_for('main.home') }}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="about" class="nav-link" href="{{ url_for('main.about') }}">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="shops" class="nav-link" href="{{ url_for('shops.shops') }}">Shops</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="map" class="nav-link" href="{{ url_for('main.sellers_map') }}">Map</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="blog" class="nav-link" href="{{ url_for('main.blog') }}">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="swaps" class="nav-link" href="#">Swaps</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="events" class="nav-link" href="#">Events</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="sell" class="nav-link" href="{{ url_for('shops.open_shop') }}">Open Shop</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="forum" class="nav-link" href="#">Forum</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Navbar Right Side -->
+                <div class="navbar-nav">
+                    {% if current_user.is_authenticated %}
+                    <div class="dropdown">
+
+                        <!-- Avatar -->
+                        <img class="rounded-circle profile-avatar dropdown-toggle" data-toggle="dropdown"
+                             src="{{ url_for('static', filename='profile_pics/' + current_user.image_file) }}">
+
+                        <!-- Dropdown menu from avatar -->
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item d-block" href="#">
+                                <i class="fa fa-user d-inline col"></i>
+                                <div class="col d-inline">View Profile</div>
+                            </a>
+                            <a class="dropdown-item d-block" href="#">
+                                <i class="fa fa-group d-inline col"></i>
+                                <div class="col d-inline">Your Tribes</div>
+                            </a>
+                            {% if current_user.shop %}
+                            <a class="dropdown-item d-block" href="{{ url_for('shops.shop_manager') }}">
+                                <i class="fa fa-heart d-inline col"></i>
+                                <div class="col d-inline">Shop Manager</div>
+                            </a>
+                            {% endif %}
+                            <a class="dropdown-item d-block" href="#">
+                                <i class="fa fa-heart d-inline col"></i>
+                                <div class="col d-inline">Favorites</div>
+                            </a>
+                            <a class="dropdown-item d-block" href="#">
+                                <i class="fa fa-envelope d-inline col"></i>
+                                <div class="col d-inline">Conversations</div>
+                            </a>
+                            <a class="dropdown-item d-block" href="#">
+                                <i class="fa fa-money d-inline col"></i>
+                                <div class="col d-inline">Purchases</div>
+                            </a>
+                            <a class="dropdown-item d-block" href="#">
+                                <i class="fa fa-star d-inline col"></i>
+                                <div class="col d-inline">Reviews</div>
+                            </a>
+                            <a class="dropdown-item d-block" href="{{ url_for('users.account') }}">
+                                <i class="fa fa-cog d-inline col"></i>
+                                <div class="col d-inline">Account Settings</div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item d-block" href="{{ url_for('users.logout') }}">
+                                <i class="fa fa-sign-out d-inline col"></i>
+                                <div class="col d-inline">Logout</div>
+                            </a>
+                        </div>
+                    </div>
+
+                    {% else %}
+                        <a class="nav-item nav-link" href="{{ url_for('users.login') }}">Login</a>
+                        <a class="nav-item nav-link" href="{{ url_for('users.register') }}">Register</a>
+                    {% endif %}
+                </div>
+
+            </nav>
+
+
+        </header>
+
+        <main role="main" class="site-main container-fluid" id="body">
+            <div class="row d-flex justify-content-center mx-0">
+                <div class="col-md-6">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    {% block content %}{% endblock %}
+
+                </div>
+            </div>
+            <div>
+                {% block shops %}{% endblock %}
+                {% block map %}{% endblock %}
+            </div>
+        </main>
+
+        <footer class="page-footer font-small bg-dark" id="footer">
+            <div class="container-fluid text-center">
+                <div class="row">
+                    <div class="col-sm mt-md-o mt-3">
+                        <h5 class="text-uppercase text-light">About</h5>
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="#!">Tribe Zero</a>
+                            </li>
+                            <li>
+                                <a href="#!">Team</a>
+                            </li>
+                            <li>
+                                <a href="#!">Link 3</a>
+                            </li>
+                            <li>
+                                <a href="#!">Link 4</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-sm mt-md-o mt-3">
+                        <h5 class="text-uppercase text-light">Help</h5>
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="#!">Help Center</a>
+                            </li>
+                            <li>
+                                <a href="#!">Link 2</a>
+                            </li>
+                            <li>
+                                <a href="#!">Link 3</a>
+                            </li>
+                            <li>
+                                <a href="#!">Link 4</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-sm mt-md-o mt-3">
+                        <h5 class="text-uppercase text-light">Sell</h5>
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="#!">Become a Trader</a>
+                            </li>
+                            <li>
+                                <a href="#!">Link 2</a>
+                            </li>
+                            <li>
+                                <a href="#!">Link 3</a>
+                            </li>
+                            <li>    
+                                <a href="#!">Link 4</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <!--Google Maps Script-->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ key }}&callback=initMap" async defer></script>
+    <script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
+</body>
+<script>
+    $(document).ready(function() {
+        $('li.active').removeClass('active');
+        $('a[href="' + location.pathname + '"]').closest('li').addClass('active');
+    });
+
+    var x = document.getElementById("your_location")
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+
+    function showPosition(position) {
+        x.innerHTML = "Latitude: " + position.coords.latitude +
+        "<br>Longitude: " + position.coords.longitude;
+    }
+
+    getLocation()
+</script>
+</html>

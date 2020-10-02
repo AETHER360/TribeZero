@@ -1,0 +1,214 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #ffffff;
+    color: black;
+}
+
+.dropdown-item {
+    padding-top: 10px;
+    width: auto;
+}
+
+.dropdown-item:hover {
+    background: #111111;
+    color: white;
+}
+
+#container {
+   min-height: 100%;
+   position: relative;
+}
+
+#map_container {
+    margin: 0;
+    padding: 0;
+}
+
+#header {
+   padding-bottom: 0;
+   height: 5rem;
+}
+
+
+#body {
+   padding: 0;
+   padding-bottom: 15rem;   /* Height of the footer */
+   padding-top: 5rem;   /* Height of the header */
+}
+
+#footer {
+   position: absolute;
+   bottom: 0;
+   width: 100%;
+   height: 15rem;   /* Height of the footer */
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #444444;
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+p {
+    text-align: justify;
+}
+
+p::first-letter {
+    font-size: large;
+}
+
+.bg-mossy {
+    background-color: #101a1a;
+}
+
+.site-header .navbar-nav .nav-link {
+    color: #cbd5db;
+}
+
+.site-header .navbar-nav .nav-item {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.site-header .navbar-nav .nav-link:hover {
+    color: #ffffff;
+}
+
+.site-header .navbar-nav .btn {
+    color: #cbd5db;
+}
+
+.site-header .navbar-nav .btn:hover {
+    color: #ffffff;
+}
+
+.site-header .navbar-nav .nav-link.active {
+    font-weight: 500;
+}
+
+.content-section {
+    background: #ffffff;
+    padding: 10px 20px;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    margin-bottom: 20px;
+}
+
+.shop-section {
+    background: #ffffff;
+    padding: 10px 20px;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    margin-bottom: 20px;
+    width: 20rem;
+}
+
+.article-title {
+    color: #444444;
+}
+
+a.article-title:hover {
+    color: #428bca;
+    text-decoration: none;
+}
+
+.article-content {
+    white-space: pre-line;
+}
+
+.article-img {
+    height: 65px;
+    width: 65px;
+    margin-right: 16px;
+}
+
+.article-metadata {
+    padding-bottom: 1px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid #e3e3e3
+}
+
+.article-metadata a:hover {
+    color: #333;
+    text-decoration: none;
+}
+
+.account-img {
+    height: 125px;
+    width: 125px;
+    margin-right: 20px;
+    margin-bottom: 16px;
+}
+
+.account-heading {
+    font-size: 2.5rem;
+}
+
+.profile-avatar {
+    height: 50px;
+    width: 50px;
+    margin: auto;
+}
+
+
+/* This is the default state of radio button*/
+.custom-radio .custom-control-label::before {
+    background-color: white;
+}
+
+/* This is the checked state of radio button */
+.custom-radio .custom-control-input:checked~.custom-control-label::before,
+.custom-radio .custom-control-input:checked~.custom-control-label::after {
+    background-color: #62f57a;
+    /* this bg image SVG is just a white circle, you can replace it with any valid SVG code */
+    background-image: url(data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3E%3Ccircle r='3' fill='%23fff'/%3E%3C/svg%3E);
+    border-radius: 50%;
+}
+
+/* active state i.e. displayed while the mouse is being pressed down of radio button */
+.custom-radio .custom-control-input:active ~ .custom-control-label::before {
+    color: #fff;
+    background-color: #ff0000;
+}
+
+/* the shadow; displayed while the element is in focus of radio button */
+.custom-radio .custom-control-input:focus ~ .custom-control-label::before {
+    box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(255, 123, 255, 0.25);
+}
+
+#map_side_bar button {
+    background-color: #c6ecc6;
+    color: #cbd5db;
+}
+
+#map_side_bar {
+    background-color: #10231a;
+}
+
+#inner_content {
+    padding: 3rem;
+}
+
+div #sellers_map {
+    width: 100%;
+    min-height: calc( 100vh - 5rem);
+    margin: 0;
+    padding: 0;
+    padding-top: 5rem;
+}
+
+#shop_manager_container {
+    min-height: 100vh;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+#shop_manager_sidebar {
+    min-height: 100vh;
+    background-color: #10231a;
+    margin: 0;
+    padding: 0;
+}

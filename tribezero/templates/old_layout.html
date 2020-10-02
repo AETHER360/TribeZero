@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- Required meta tags for Bootstrap-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    {% if title %}
+        <title>Tribe Zero - {{ title }}</title>
+    {% else %}
+        <title>Tribe Zero</title>
+    {% endif %}
+</head>
+<body>
+    <div id="container">
+        <header class="site-header fixed-top" id="header">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-mossy">
+                <div class="container-fluid">
+
+                    <!-- Logo -->
+                    <a class="navbar-brand" href="{{ url_for('main.home') }}"><img width="5%" height="5%" src="{{ url_for('static', filename='tribezero_logo.png') }}">Tribe Zero</a>
+
+                        <!-- Search Bar -->
+                        <nav class="navbar navbar-light mr-auto">
+                            <form class="form-inline">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="dropdown">
+                                            <button class="btn btn-outline-light my-2 my-sm-0 dropdown-toggle" type="button" data-toggle="dropdown">
+                                                <ul class="dropdown-menu px-3">
+                                                    <li><a href="#">Blog</a></li>
+                                                    <li><a href="#">Shop</a></li>
+                                                    <li><a href="#">Events</a></li>
+                                                </ul>
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                                    <button class="btn btn-outline-light my-2 my-sm-0" type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </nav>
+
+                        <!-- Navbar Right Side -->
+                        <div class="navbar-nav">
+                            {% if current_user.is_authenticated %}
+                                <div class="dropdown">
+                                    <img class="rounded-circle profile-avatar mx-2" data-toggle="dropdown"
+                                         src="{{ url_for('static', filename='profile_pics/' + current_user.image_file) }}">
+
+                                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                        <li><a class="dropdown-item d-inline" href="#">
+                                            <i class="fa fa-user d-inline col"></i>
+                                            <div class="col d-inline">View Profile</div></a></li>
+
+                                        <li><a class="dropdown-item d-inline" href="#">
+                                            <i class="fa fa-group d-inline col"></i>
+                                            <div class="col d-inline">Your Tribes</div></a></li>
+
+                                        {% if current_user.shop %}
+                                            <li><a class="dropdown-item d-inline" href="{{ url_for('shops.shop_manager') }}">
+                                            <i class="fa fa-heart d-inline col"></i>
+                                            <div class="col d-inline">Shop Manager</div></a></li>
+                                        {% endif %}
+
+                                        <li><a class="dropdown-item d-inline" href="#">
+                                            <i class="fa fa-heart d-inline col"></i>
+                                            <div class="col d-inline">Favorites</div></a></li>
+
+                                        <li><a class="dropdown-item d-inline" href="#">
+                                            <i class="fa fa-envelope d-inline col"></i>
+                                            <div class="col d-inline">Conversations</div></a></li>
+
+                                        <li><a class="dropdown-item d-inline" href="#">
+                                            <i class="fa fa-money d-inline col"></i>
+                                            <div class="col d-inline">Purchases</div></a></li>
+
+                                        <li><a class="dropdown-item d-inline" href="#">
+                                            <i class="fa fa-star d-inline col"></i>
+                                            <div class="col d-inline">Reviews</div></a></li>
+
+                                        <li><a class="dropdown-item d-inline" href="{{ url_for('users.account') }}">
+                                            <i class="fa fa-cog d-inline col"></i>
+                                            <div class="col d-inline">Account Settings</div></a></li>
+
+                                        <div class="dropdown-divider"></div>
+
+                                        <li><a class="dropdown-item d-inline" href="{{ url_for('users.logout') }}">
+                                            <i class="fa fa-sign-out d-inline col"></i>
+                                            <div class="col d-inline">Logout</div></a></li>
+                                    </ul>
+                                </div>
+                            </a>
+                                <button class="btn my-0 my-sm-0" type="submit">
+                                    <i class="fa fa-shopping-basket fa-lg"></i>
+                                </button></i></a>
+                            {% else %}
+                                <a class="nav-item nav-link" href="{{ url_for('users.login') }}">Login</a>
+                                <a class="nav-item nav-link" href="{{ url_for('users.register') }}">Register</a>
+                            {% endif %}
+                        </div>
+                </div>
+            </nav>
+            <nav class="navbar navbar-expand-md navbar-dark bg-mossy pb-0">
+                <div class="container-fluid text-center">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+                            aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarToggle">
+                        <div class="nav nav-bar mx-auto" id="bottomTabs">
+                            <div class="bottom-tabs"><li>
+                                <a id="home" class="nav-item nav-link rounded-top" href="{{ url_for('main.home') }}">Home</a>
+                            </li></div>
+                            <div class="bottom-tabs"><li>
+                                <a id="about" class="nav-item nav-link rounded-top" href="{{ url_for('main.about') }}">About</a>
+                            </li></div>
+                            <div class="bottom-tabs"><li>
+                                <a id="shops" class="nav-item nav-link rounded-top" href="{{ url_for('shops.shops') }}">Shops</a>
+                            </li></div>
+                            <div class="bottom-tabs"><li>
+                                <a id="map" class="nav-item nav-link rounded-top" href="{{ url_for('main.sellers_map') }}">Map</a>
+                            </li></div>
+                            <div class="bottom-tabs"><li>
+                                <a id="blog" class="nav-item nav-link rounded-top" href="{{ url_for('main.blog') }}">Blog</a>
+                            </li></div>
+                            <div class="bottom-tabs"><li>
+                                <a id="swaps" class="nav-item nav-link rounded-top" href="#">Swaps</a>
+                            </li></div>
+                            <div class="bottom-tabs"><li>
+                                <a id="events" class="nav-item nav-link rounded-top" href="#">Events</a>
+                            </li></div>
+                            <div class="bottom-tabs"><li>
+                                <a id="sell" class="nav-item nav-link rounded-top" href="{{ url_for('shops.open_shop') }}">Open Shop</a>
+                            </li></div>
+                            <div class="bottom-tabs"><li>
+                                <a id="forum" class="nav-item nav-link rounded-top" href="#">Forum</a>
+                            </li></div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <main role="main" class="site-main container-fluid" id="body">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-6">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+            <div>
+                {% block shops %}{% endblock %}
+                {% block map %}{% endblock %}
+            </div>
+        </main>
+        <footer class="page-footer font-small bg-dark" id="footer">
+            <div class="container-fluid text-center">
+                <div class="row">
+                    <div class="col-sm mt-md-o mt-3">
+                        <h5 class="text-uppercase text-light">About</h5>
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="#!">Tribe Zero</a>
+                            </li>
+                            <li>
+                                <a href="#!">Team</a>
+                            </li>
+                            <li>
+                                <a href="#!">Link 3</a>
+                            </li>
+                            <li>
+                                <a href="#!">Link 4</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-sm mt-md-o mt-3">
+                        <h5 class="text-uppercase text-light">Help</h5>
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="#!">Help Center</a>
+                            </li>
+                            <li>
+                                <a href="#!">Link 2</a>
+                            </li>
+                            <li>
+                                <a href="#!">Link 3</a>
+                            </li>
+                            <li>
+                                <a href="#!">Link 4</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-sm mt-md-o mt-3">
+                        <h5 class="text-uppercase text-light">Sell</h5>
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="#!">Become a Trader</a>
+                            </li>
+                            <li>
+                                <a href="#!">Link 2</a>
+                            </li>
+                            <li>
+                                <a href="#!">Link 3</a>
+                            </li>
+                            <li>
+                                <a href="#!">Link 4</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <!--Google Maps Script-->
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ key }}&callback=initMap" async defer></script>
+</body>
+<script>
+    $(document).ready(function() {
+        $('li.active').removeClass('active');
+        $('a[href="' + location.pathname + '"]').closest('li').addClass('active');
+    });
+</script>
+</html>

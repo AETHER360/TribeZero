@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <h1 class="row">Shop Name: {{ shop_info.name }}</h1>
+    <h4 class="row">Shop Owner: {{ shop_info.owner.username }}</h4>
+    <h4 class="row">Shop Created: {{ shop_info.created.strftime('%d-%m-%Y') }}</h4>
+    <h4 class="row">User Email: {{ shop_info.owner.email }}</h4>
+    <h4 class="row">Shop Email: {{ shop_info.email }}</h4>
+
+{% endblock content %}
+

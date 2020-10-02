@@ -1,0 +1,17 @@
+**/*.pyc
+**/*.log
+**/*.idea
+tribezero/__pycache__/
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block shops %}
+    <div class="row d-flex justify-content-center flex-wrap">
+        {% for shop in shops.items %}
+            <article class="media shop-section mx-2">
+                <img class="rounded-circle article-img" src="{{ url_for('static', filename='shop_pics/' + shop.image_file) }}">
+                <div class="media-body">
+                    <div class="article-metadata">
+                        <a class="mr-auto" href="{{ url_for('shops.shops', shop_name=shop.name) }}">{{ shop.name }}</a>
+                        <small class="text-muted">{{ shop.created.strftime('%Y-%m-%d') }}</small>
+                    </div>
+                    <h2 class="text-left"><a class="article-title" href="{{ url_for('shops.shop', name=shop.name) }}">{{ shop.owner.username }}</a></h2>
+                    <p class="article-content">{{ shop.description }}</p>
+                </div>
+            </article>
+        {% endfor %}
+    </div>
+    <div class="text-center">
+    {% for page_num in shops.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% if page_num %}
+            {% if shops.page == page_num %}
+                <a class="btn btn-info mb-4" href="{{ url_for('shops.shops', page=page_num) }}">{{ page_num }}</a>
+            {% else %}
+                <a class="btn btn-outline-info mb-4" href="{{ url_for('shops.shops', page=page_num) }}">{{ page_num }}</a>
+            {% endif %}
+        {% else %}
+            ...
+        {% endif %}
+    {% endfor %}
+    </div>
+{% endblock shops %}

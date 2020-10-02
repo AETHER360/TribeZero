@@ -1,0 +1,103 @@
+{% extends "layout.html" %}
+
+{% block map %}
+    <div id="map_container">
+        <div id="sellers_map" class="d-flex flex-fill"></div>
+    </div>
+
+    <script>
+        <!--Google Maps JS-->
+        var map, marker;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('sellers_map'), {
+                center: {lat: -34.397, lng: 150.644},
+                zoom: 15,
+                gestureHandling: 'greedy'
+            });
+
+            //Try HTML5 Geolocation.
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+
+                    map.setCenter(pos);
+
+                    marker = new google.maps.Marker({
+                        position: pos,
+                        title: "Your current location",
+                        map: map,
+                        animation: google.maps.Animation.DROP,
+                        icon: "{{ url_for('static', filename='marker_icons/home_icon.png') }}"
+                    });
+
+                    var infowindow = new google.maps.InfoWindow();
+                    var markers = []
+                    var clusterStyles = [
+                        {
+                            textColor: 'white',
+                            url: "{{ url_for('static', filename='marker_icons/m/1.png') }}",
+                            height: 52,
+                            width: 53
+                        },
+                        {
+                            textColor: 'white',
+                            url: "{{ url_for('static', filename='marker_icons/m/2.png') }}",
+                            height: 55,
+                            width: 56
+                        },
+                        {
+                            textColor: 'white',
+                            url: "{{ url_for('static', filename='marker_icons/m/3.png') }}",
+                            height: 65,
+                            width: 66
+                        },
+                        {
+                            textColor: 'white',
+                            url: "{{ url_for('static', filename='marker_icons/m/4.png') }}",
+                            height: 77,
+                            width: 78
+                        },
+                        {
+                            textColor: 'white',
+                            url: "{{ url_for('static', filename='marker_icons/m/5.png') }}",
+                            height: 89,
+                            width: 90
+                        }
+                    ];
+
+                    clusterOptions = {
+                        styles: clusterStyles
+                    };
+
+                    {% for shop in shops %}
+                        {% set file = 'marker_icons/' ~ shop.shop_categories ~ '_icon.png' %}
+                        var shop_description = '<h3><b>{{ shop.name }}<b><h3></br></br>' + '{{ shop.description }}'
+
+                        marker = new google.maps.Marker({
+                            position: {lat: {{ shop.company_coordinates_lat | tojson  }}, lng: {{ shop.company_coordinates_lon | tojson  }}},
+                            title: "{{ shop.name }}",
+                            map: map,
+                            icon: "{{ url_for('static', filename=file) }}"
+                        });
+
+                        markers.push(marker);
+
+                        google.maps.event.addListener(marker, 'click', (function(marker, shop_description) {
+                            return function() {
+                                infowindow.setContent(shop_description);
+                                infowindow.open(map, marker);
+                            }
+                        })(marker, shop_description));
+                    {% endfor %}
+
+                    var markerCluster = new MarkerClusterer(map, markers, clusterOptions);
+
+                });
+            }
+        }
+    </script>
+{% endblock map %}
